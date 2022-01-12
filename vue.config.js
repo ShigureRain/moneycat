@@ -1,5 +1,4 @@
-// const path = require('path')
-import path from 'path'
+const path = require('path')
 
 module.exports = {
   lintOnSave: false,
@@ -14,11 +13,12 @@ module.exports = {
       .loader('svg-sprite-loader')
       .options({extract: false})
       .end()
+      // .use('svgo-loader').loader('svgo-loader')
+      // .tap(options => ({...options, plugins: [{removeAttrs: {attrs: 'fill'}}]}))
+      // .end()   没用
     config.plugin('svg-sprite')
-      .use(import('svg-sprite-loader/plugin'), [{plainSprite: true}])
+      .use(require('svg-sprite-loader/plugin'), [{plainSprite: true}])
     config.module.rule('svg').exclude.add(dir) // 其他 svg loader 排除 icons 目录
-
-    //配置svg-loader
 
 
     // config.module
@@ -34,3 +34,4 @@ module.exports = {
 
   }
 }
+

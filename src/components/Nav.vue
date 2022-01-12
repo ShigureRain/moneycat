@@ -37,6 +37,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      color: #999999;
 
       .icon {
         width: 32px;
