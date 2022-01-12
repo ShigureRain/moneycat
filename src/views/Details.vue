@@ -1,14 +1,14 @@
 <template>
-  <div>Details.vue
-    <Nav/>
-  </div>
+  <Layout>
+    <p>Details.vue</p>
+  </Layout>
 </template>
 
 <script lang="ts">
 
-export default {
-  name: 'Details',
-};
+  export default {
+    name: 'Details',
+  };
 </script>
 
 <style lang="scss" scoped>

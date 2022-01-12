@@ -13,12 +13,12 @@ const routes: Array<RouteConfig> = [
     redirect: '/money'
   },
   {
-    path: '/money',
-    component: Money
-  },  //引入url路径
-  {
     path: '/details',
     component: Details
+  }, //引入url路径
+  {
+    path: '/money',
+    component: Money
   },
   {
     path: '/statistics',
@@ -26,7 +26,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '*',
-    component:NotFound
+    component: NotFound
   }
 
   // {
