@@ -24,6 +24,8 @@
 
 <style lang="scss" scoped>
   //scoped会自动给class类加上属性名
+  @import "~@/assets/style/helper.scss";
+
   nav {
     display: flex;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
@@ -53,7 +55,8 @@
     }
 
     > .item.selected {
-      color: #F7CE5F;
+      color: $color-highlight;
     }
+
   }
 </style>
