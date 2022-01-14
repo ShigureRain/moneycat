@@ -1,6 +1,6 @@
 <template>
   <Layout class-prefix="layout">
-    <Types/>
+    <Types xxx="hi"/>
     <Tags/>
     <NumberPad/>
   </Layout>
