@@ -7,27 +7,40 @@
   </div>
 </template>
 
-<script lang="js">
-  export default {
-    name: 'Types',
-    props: ['xxx'],
-    data() {
-      return {
-        type: '-'  // '-'表示支出,'+'表示收入
+<script lang="ts">
+  import Vue from 'vue';
+  import {Component} from 'vue-property-decorator';
+
+  @Component
+  export default class Types extends Vue {
+    type = '-';
+    selectType(type: string) {
+      if (type !== '-' && type !== '+') {
+        throw new Error('type is unknown');
       }
-    },
-    mounted() {
-      console.log(this.xxx)
-    },
-    methods: {
-      selectType(type) {
-        if (type !== '-' && type !== '+') {
-          throw new Error('type is unknown')
-        }
-        this.type = type
-      }
+      this.type = type;
     }
   }
+  // export default {
+  //   name: 'Types',
+  //   props: ['xxx'],
+  //   data() {
+  //     return {
+  //       type: '-'  // '-'表示支出,'+'表示收入
+  //     }
+  //   },
+  //   mounted() {
+  //     console.log(this.xxx)
+  //   },
+  //   methods: {
+  //     selectType(type) {
+  //       if (type !== '-' && type !== '+') {
+  //         throw new Error('type is unknown')
+  //       }
+  //       this.type = type
+  //     }
+  //   }
+  // }
 </script>
 
 <style lang="scss" scoped>
@@ -52,7 +65,7 @@
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 50%;
+        width: 60%;
         height: 2px;
         background: #515151;
       }
