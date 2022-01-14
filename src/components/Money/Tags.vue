@@ -13,10 +13,27 @@
         <Icon name="juzhu"/>
         <div class="word">居住</div>
       </li>
-      <li class="right">
+      <li>
         <Icon name="jiaotong"/>
         <div class="word">交通</div>
       </li>
+      <li>
+        <Icon name="canyin"/>
+        <div class="word">餐饮</div>
+      </li>
+      <li>
+        <Icon name="gouwu"/>
+        <div class="word">购物</div>
+      </li>
+      <li>
+        <Icon name="juzhu"/>
+        <div class="word">居住</div>
+      </li>
+      <li>
+        <Icon name="jiaotong"/>
+        <div class="word">交通</div>
+      </li>
+
       <li>
         <Icon name="yule"/>
         <div class="word">娱乐</div>
@@ -29,7 +46,7 @@
         <Icon name="shejiao"/>
         <div class="word">社交</div>
       </li>
-      <li class="new right">
+      <li class="new">
         <button>
           <Icon name="add"/>
         </button>
@@ -48,21 +65,23 @@
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
   .tags {
+    height: 100%;
+    overflow-y: auto;
     font-size: 15px;
     flex-grow: 1;
     display: flex;
-    flex-direction: column-reverse;
-    color: #515151;
+    flex-direction: column;
+    color: #333;
     > .current {
-      padding-top: 100px;
-      width: 300px;
-      display: flex;
+      padding-top: 24px;
+      display: grid;
       flex-wrap: wrap;
-      margin: auto;
+      justify-content: center;
+      grid-template-columns: repeat(auto-fill, 80px);
       > li {
-        display: flex;
         flex-direction: column;
-        margin-right: 20px;
+        display: flex;
+        margin: 10px;
         .icon {
           background: #ffffff;
           font-size: 30px;
@@ -74,7 +93,7 @@
           color: $color-highlight;
         }
         .word {
-          padding: 6px 15px 20px 15px;
+          padding: 6px 15px 0 15px;
         }
       }
       .new {
@@ -85,9 +104,6 @@
             padding: 13px 13px 11px 11px;
           }
         }
-      }
-      .right {
-        margin-right: -20px;
       }
     }
   }
