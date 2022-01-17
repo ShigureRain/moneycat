@@ -65,6 +65,8 @@
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
   .tags {
+    margin-left: 8px;
+    margin-right: 8px;
     height: 100%;
     overflow-y: auto;
     font-size: 15px;
