@@ -1,70 +1,101 @@
 <template>
   <div class="numberPad">
-
     <div class="note">
       <label class="notes">
         <span class="name">备注</span>
-        <input placeholder="在这里输入备注" type="text">
+        <input placeholder="这里输入备注" type="text">
       </label>
       <div class="output">
-        100
+        {{ output || '0' }}
       </div>
     </div>
     <div class="buttons">
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button>+</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>-</button>
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button class="ok">OK</button>
-      <button>.</button>
-      <button>0</button>
-      <button>←</button>
+      <button @click="inputContent">7</button>
+      <button @click="inputContent">8</button>
+      <button @click="inputContent">9</button>
+      <button @click="add">+</button>
+      <button @click="inputContent">4</button>
+      <button @click="inputContent">5</button>
+      <button @click="inputContent">6</button>
+      <button @click="sub">-</button>
+      <button @click="inputContent">1</button>
+      <button @click="inputContent">2</button>
+      <button @click="inputContent">3</button>
+      <button class="ok" @click="ok">OK</button>
+      <button @click="inputContent">.</button>
+      <button @click="inputContent">0</button>
+      <button @click="remove">←</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'NumberPad'
-  };
+  import Vue from 'vue';
+  import {Component} from 'vue-property-decorator';
+
+  @Component
+  export default class NumberPad extends Vue {
+    output = '';
+    inputContent(event: MouseEvent) {
+      const button = (event.target as HTMLButtonElement);
+      const input = button.textContent!;
+      //  ! 就是排除空
+      if (this.output.length === 10) { return; }
+      if (this.output === '0') {
+        if ('0123456789'.indexOf(input) >= 0) {
+          this.output = input;
+        } else {
+          this.output += input;
+        }
+        return;
+      }
+      if (this.output.indexOf('.') >= 0 && input === '.') {return;}
+      this.output += input;
+    }
+    remove() {
+      if (this.output.length === 1) {
+        this.output = '0';
+      } else {
+        this.output = this.output.slice(0, -1);
+      }
+    }
+    ok() {
+    }
+    add() {
+    }
+    sub() {}
+  }
+
+
 </script>
 
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
   .numberPad {
     .note {
-      @extend %innerShadow;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-right: 16px;
       .notes {
-        @extend %innerShadow;
+        max-width: 45%;
         font-size: 14px;
         background: #f5f5f5;
         padding-left: 16px;
         display: flex;
         align-items: center;
         .name {
-          padding-right: 16px;
+          min-width: 40px;
         }
         input {
           height: 64px;
           flex-grow: 1;
           background: transparent;
           border: none;
-          padding-right: 16px;
         }
       }
       .output {
         @extend %clearFix;
+        padding-right: 16px;
         font-size: 36px;
         font-family: Consolas, monospace;
       }
