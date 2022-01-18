@@ -240,19 +240,16 @@
         }
       }
       .output {
-        @extend %clearFix;
         padding-right: 16px;
         font-size: 36px;
         font-family: Consolas, monospace;
       }
     }
     .buttons {
-      @extend %clearFix;
       > button {
         width: 25%;
         height: 64px;
         float: left;
-        background: transparent;
         border: none;
         &.ok {
           height: 64*2px;

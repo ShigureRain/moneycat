@@ -1,50 +1,9 @@
 <template>
   <div class="tags">
     <ul class="current">
-      <li>
+      <li v-for="tag in dataSource" :key="tag" :class="{selected: selectedTags.indexOf(tag)>=0}" @click="toggle(tag)">
         <Icon name="canyin"/>
-        <div class="word">餐饮</div>
-      </li>
-      <li>
-        <Icon name="gouwu"/>
-        <div class="word">购物</div>
-      </li>
-      <li>
-        <Icon name="juzhu"/>
-        <div class="word">居住</div>
-      </li>
-      <li>
-        <Icon name="jiaotong"/>
-        <div class="word">交通</div>
-      </li>
-      <li>
-        <Icon name="canyin"/>
-        <div class="word">餐饮</div>
-      </li>
-      <li>
-        <Icon name="gouwu"/>
-        <div class="word">购物</div>
-      </li>
-      <li>
-        <Icon name="juzhu"/>
-        <div class="word">居住</div>
-      </li>
-      <li>
-        <Icon name="jiaotong"/>
-        <div class="word">交通</div>
-      </li>
-
-      <li>
-        <Icon name="yule"/>
-        <div class="word">娱乐</div>
-      </li>
-      <li>
-        <Icon name="yiliao"/>
-        <div class="word">医疗</div>
-      </li>
-      <li>
-        <Icon name="shejiao"/>
-        <div class="word">社交</div>
+        <div class="word">{{ tag }}</div>
       </li>
       <li class="new">
         <button>
@@ -57,9 +16,23 @@
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Tags'
-  };
+  import Vue from 'vue';
+  import {Component, Prop} from 'vue-property-decorator';
+
+  @Component
+  export default class Tags extends Vue {
+    @Prop() dataSource: string[] | undefined;
+    selectedTags: string[] = [];
+
+    toggle(tag: string) {
+      const index = this.selectedTags.indexOf(tag);
+      if (index >= 0) {
+        this.selectedTags.splice(index, 1);
+      } else {
+        this.selectedTags.push(tag);
+      }
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -84,6 +57,15 @@
         flex-direction: column;
         display: flex;
         margin: 10px;
+        &.selected {
+          .icon {
+            border: $color-highlight solid 2px;
+            padding: 10px;
+          }
+          .word {
+            color: $color-highlight;
+          }
+        }
         .icon {
           background: #ffffff;
           font-size: 30px;
