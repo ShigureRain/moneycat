@@ -40,7 +40,7 @@
   })
   export default class Money extends Vue {
     tags = ['餐饮', '购物', '居住', '交通', '娱乐', '医疗', '社交'];
-    recordList: Record[] = recordList ;
+    recordList: Record[] = recordList;
     record: Record = {
       tags: [], note: '', type: '-', amount: 0
     };
