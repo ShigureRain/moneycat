@@ -3,7 +3,7 @@
     <div class="note">
       <label class="notes">
         <span class="name">备注</span>
-        <input v-model="value" placeholder="这里输入备注" type="text">
+        <input v-model="note" placeholder="这里输入备注" type="text">
       </label>
       <div class="output">
         {{ output || '0' }}
@@ -30,14 +30,17 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Watch} from 'vue-property-decorator';
 
   @Component
+
   export default class NumberPad extends Vue {
+    note = '';
     output = '0';
     inputContent(event: MouseEvent) {
       const button = (event.target as HTMLButtonElement);
       const input = button.textContent!;
+      // !就是排除空
       if (this.output.length === 10) { return; }
       if (this.output === '0') {
         if ('0123456789'.indexOf(input) >= 0) {
@@ -61,6 +64,11 @@
       this.output = '0';
     }
     ok() {
+      this.$emit('update:value', this.output);
+    }
+    @Watch('note')
+    onValueChanges(note: string) {
+      this.$emit('update:note', note);
     }
   }
 </script>

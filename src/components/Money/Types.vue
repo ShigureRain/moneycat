@@ -1,8 +1,8 @@
 <template>
   <div>
     <ul class="types">
-      <li :class="type === '-' && 'selected'" @click="selectType('-')">支出</li>
-      <li :class="type === '+' && 'selected'" @click="selectType('+')">收入</li>
+      <li :class="value === '-' && 'selected'" @click="selectType('-')">支出</li>
+      <li :class="value === '+' && 'selected'" @click="selectType('+')">收入</li>
     </ul>
   </div>
 </template>
@@ -13,8 +13,9 @@
 
   @Component
   export default class Types extends Vue {
-    type = '-';
-    @Prop(Number) xxx: number | undefined;
+    // type = '-';
+    @Prop() readonly value!: string;
+    // @Prop(Number) xxx: number | undefined;
     // Prop 告诉 Vue  xxx不是data是prop
     // Number 告诉 Vue  运行时xxx是个Number
     // xxx 属性名
@@ -24,9 +25,14 @@
       if (type !== '-' && type !== '+') {
         throw new Error('type is unknown');
       }
-      this.type = type;
+      this.$emit('update:value', type);
+      // this.type = type;
     }
   }
+  // @Watch('type')
+  // onTypeChanged(value:string) {
+  //   this.$emit('update:value', value);
+  // }
   // export default {
   //   name: 'Types',
   //   props: ['xxx'],
