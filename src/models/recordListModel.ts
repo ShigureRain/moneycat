@@ -1,7 +1,7 @@
 const localStorageKeyName = 'recordList';
-const model = {
+const recordListModel = {
   clone(data: RecordItem[] | RecordItem) {
-    return JSON.parse(JSON.stringify(data))
+    return JSON.parse(JSON.stringify(data));
   },
   fetch() {
     return JSON.parse(window.localStorage.getItem('localStorageKeyName') || '[]') as RecordItem[];  //as断言类型 , 后面使用就可以不再声明
@@ -11,6 +11,6 @@ const model = {
 
   }
 };
-// 封装 model
+// 封装 recordListModel
 
-export default model;
+export default recordListModel;

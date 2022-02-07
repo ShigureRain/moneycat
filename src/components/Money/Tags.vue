@@ -2,14 +2,12 @@
   <div class="tags">
     <ul class="current">
       <li v-for="tag in dataSource" :key="tag" :class="{selected: selectedTags.indexOf(tag)>=0}" @click="toggle(tag)">
-        <Icon name="canyin"/>
         <div class="word">{{ tag }}</div>
       </li>
       <li class="new">
         <button>
           <Icon name="add"/>
         </button>
-        <div class="word">添加</div>
       </li>
     </ul>
   </div>
@@ -31,7 +29,7 @@
       } else {
         this.selectedTags.push(tag);
       }
-      this.$emit('update:value',this.selectedTags)
+      this.$emit('update:value', this.selectedTags);
     }
   }
 </script>
@@ -39,6 +37,7 @@
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
   .tags {
+    $h: 60px;
     margin-left: 8px;
     margin-right: 8px;
     height: 100%;
@@ -59,26 +58,32 @@
         display: flex;
         margin: 10px;
         &.selected {
-          .icon {
-            border: $color-highlight solid 2px;
-            padding: 10px;
-          }
           .word {
+            border: $color-highlight solid 2px;
+            display: flex;
+            justify-content: center;
+            line-height: 56px;
             color: $color-highlight;
           }
         }
         .icon {
           background: #ffffff;
-          font-size: 30px;
           $h: 60px;
           width: $h;
           height: $h;
           border-radius: 50%;
-          padding: 12px;
           color: $color-highlight;
         }
         .word {
-          padding: 6px 15px 0 15px;
+          background: #ffffff;
+          font-size: 16px;
+          width: $h;
+          height: $h;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          line-height: $h;
+          color: #999999;
         }
       }
       .new {

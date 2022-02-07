@@ -12,14 +12,16 @@
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component, Watch} from 'vue-property-decorator';
-  import model from '@/model';
+  import recordListModel from '@/models/recordListModel';
+  import tagListModel from '@/models/tagListModel';
 
-  // const model = require('@/model.js').default;
+  // const recordListModel = require('@/recordListModel.js').default;
 
   // window.localStorage.setItem('version', '0.0.1');
   // const version = window.localStorage.getItem('version') || '0';
   // const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
-  const recordList = model.fetch();
+  const recordList = recordListModel.fetch();
+  const tagList = tagListModel.fetch();
 
   // if (version === '0.0.1') {
   //   // 数据库升级，数据迁移
@@ -43,13 +45,13 @@
     components: {Types, NumberPad, Tags}
   })
   export default class Money extends Vue {
-    tags = ['餐饮', '购物', '居住', '交通', '娱乐', '医疗', '社交'];
-    recordList: RecordItem[] = recordList;
-    record: RecordItem = {
+    tags = tagList;
+    recordList = recordList;
+    record = {
       tags: [], note: '', type: '-', amount: 0
     };
 
-    onUpdateTags(value: string[]) {
+    onUpdateTags(value: []) {
       this.record.tags = value;
     }
     // @update:value="onUpdateType"
@@ -63,7 +65,7 @@
       this.record.note = value;
     }
     saveRecord() {
-      const record2 = model.clone(this.record);
+      const record2 = recordListModel.clone(this.record);
       record2.createdAt = new Date();
       this.recordList.push(record2);
       // this.recordList.push(this.record);
@@ -72,7 +74,7 @@
 
     @Watch('recordList')
     onRecordListChange() {
-      model.save(this.recordList);
+      recordListModel.save(this.recordList);
     }
   }
 </script>

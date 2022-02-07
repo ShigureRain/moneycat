@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter, {RouteConfig} from 'vue-router';
 import Money from '@/views/Money.vue';
-import Details from '@/views/Details.vue';
+import Labels from '@/views/Labels.vue';
 import Statistics from '@/views/Statistics.vue';
 import NotFound from '@/views/NotFound.vue';
 
@@ -13,8 +13,8 @@ const routes: Array<RouteConfig> = [
     redirect: '/money'
   },
   {
-    path: '/details',
-    component: Details
+    path: '/labels',
+    component: Labels
   }, //引入url路径
   {
     path: '/money',

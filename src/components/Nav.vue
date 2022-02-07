@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <router-link active-class="selected" class="item" to="/details">
-      <Icon name="details"/>
-      明细
+    <router-link active-class="selected" class="item" to="/labels">
+      <Icon name="labels"/>
+      标签
     </router-link>
     <router-link active-class="selected" class="item money" to="/money">
       <Icon name="money"/>
