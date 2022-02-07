@@ -12,11 +12,15 @@
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component, Watch} from 'vue-property-decorator';
+  import model from '@/model';
+
+  // const model = require('@/model.js').default;
 
   // window.localStorage.setItem('version', '0.0.1');
-
   // const version = window.localStorage.getItem('version') || '0';
-  const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
+  // const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
+  const recordList = model.fetch();
+
   // if (version === '0.0.1') {
   //   // 数据库升级，数据迁移
   //   recordList.forEach(record => {
@@ -27,21 +31,21 @@
   // }
   // window.localStorage.setItem('version', '0.0.2');
 
-  type Record = {
-    tags: string[]
-    note: string
-    type: string
-    amount: number  // 数据类型 object | string
-    createdAt?: Date   // 类 / 构造函数
-  }
+  // type RecordItem = {
+  //   tags: string[]
+  //   note: string
+  //   type: string
+  //   amount: number  // 数据类型 object | string
+  //   createdAt?: Date   // 类 / 构造函数
+  // }
 
   @Component({
     components: {Types, NumberPad, Tags}
   })
   export default class Money extends Vue {
     tags = ['餐饮', '购物', '居住', '交通', '娱乐', '医疗', '社交'];
-    recordList: Record[] = recordList;
-    record: Record = {
+    recordList: RecordItem[] = recordList;
+    record: RecordItem = {
       tags: [], note: '', type: '-', amount: 0
     };
 
@@ -59,7 +63,7 @@
       this.record.note = value;
     }
     saveRecord() {
-      const record2: Record = JSON.parse(JSON.stringify(this.record));
+      const record2 = model.clone(this.record);
       record2.createdAt = new Date();
       this.recordList.push(record2);
       // this.recordList.push(this.record);
@@ -68,7 +72,7 @@
 
     @Watch('recordList')
     onRecordListChange() {
-      window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
+      model.save(this.recordList);
     }
   }
 </script>
