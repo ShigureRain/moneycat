@@ -1,15 +1,16 @@
 <template>
   <Layout>
+    <div class="title">喵 记 簿</div>
     <div class="tags">
-      <router-link class="tag" v-for="tag in tags" :key="tag.id" :to="`/labels/edit/${tag.id}`">
+      <router-link v-for="tag in tags" :key="tag.id" :to="`/labels/edit/${tag.id}`" class="tag">
         <span>{{ tag.name }}</span>
         <Icon name="right"/>
       </router-link>
     </div>
     <div class="createTag-wrapper">
-      <button class="createTag" @click="createTag">
+      <Button class="createTag" @click.native="createTag">
         新建标签
-      </button>
+      </Button>
     </div>
   </Layout>
 </template>
@@ -19,10 +20,13 @@
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
   import tagListModel from '@/models/tagListModel';
+  import Button from '@/components/Button.vue';
 
   tagListModel.fetch();
 
-  @Component
+  @Component({
+    components: {Button}
+  })
   export default class Labels extends Vue {
     tags = tagListModel.data;
 
@@ -43,6 +47,16 @@
 
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
+  .title {
+    height: 64px;
+    text-align: center;
+    font-size: 24px;
+    background: $color-highlight;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+  }
   .tags {
     background: white;
     font-size: 16px;
@@ -60,12 +74,6 @@
     }
   }
   .createTag {
-    background: $color-highlight;
-    color: white;
-    border-radius: 4px;
-    border: none;
-    height: 40px;
-    padding: 0 12px;
     &-wrapper {
       text-align: center;
       padding: 16px;

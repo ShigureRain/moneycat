@@ -74,9 +74,10 @@
     .note {
       display: flex;
       flex-direction: row-reverse;
+      background-color: $color-highlight;
     }
     .output {
-      padding-right: 20px;
+      padding: 5px 20px;
       font-size: 36px;
       font-family: Consolas, monospace;
     }
