@@ -25,7 +25,6 @@
   // const version = window.localStorage.getItem('version') || '0';
   // const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
   const recordList = recordListModel.fetch();
-  const tagList = tagListModel.fetch();
 
   // if (version === '0.0.1') {
   //   // 数据库升级，数据迁移
@@ -49,13 +48,13 @@
     components: {Types, NumberPad, Tags, FormItem}
   })
   export default class Money extends Vue {
-    tags = tagList;
-    recordList = recordList;
+    tags = window.tagList;
+    recordList= recordList;
     record = {
       tags: [], note: '', type: '-', amount: 0
     };
 
-    onUpdateTags(value: []) {
+    onUpdateTags(value: string[]) {
       this.record.tags = value;
     }
     // @update:value="onUpdateType"
