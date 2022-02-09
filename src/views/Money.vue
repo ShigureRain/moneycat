@@ -1,5 +1,6 @@
 <template>
   <Layout class-prefix="layout">
+    {{ record }}
     <Types :value.sync="record.type"/>
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
     <FormItem field-name="备注"
