@@ -51,7 +51,7 @@
     height: 64px;
     text-align: center;
     font-size: 24px;
-    background: $color-highlight;
+    background: #f6c84c;
     display: flex;
     align-items: center;
     justify-content: center;

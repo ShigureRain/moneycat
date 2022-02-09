@@ -52,7 +52,7 @@
     text-align: center;
     font-size: 20px;
     padding: 12px 16px;
-    background: $color-highlight;
+    background: #f6c84c;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -67,7 +67,6 @@
     }
   }
   .form-wrapper {
-    background-color: white;
     margin-top: 8px;
   }
   .deleteTag {

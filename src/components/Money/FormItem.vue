@@ -17,7 +17,7 @@
   @Component
   export default class FormItem extends Vue {
     name = 'FormItem';
-    value = '';
+    @Prop({default: ''}) value!: string;
     @Prop({required: true}) fieldName!: string;
     @Prop() placeholder?: string;
 
@@ -32,6 +32,7 @@
 
 <style lang="scss" scoped>
   .formItem {
+    background: white;
     font-size: 16px;
     padding-left: 16px;
     display: flex;
