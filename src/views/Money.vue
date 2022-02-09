@@ -13,18 +13,15 @@
   import Vue from 'vue';
   import Types from '@/components/Money/Types.vue';
   import NumberPad from '@/components/Money/NumberPad.vue';
-  import Tags from '@/components/Money/Tags.vue';
-  import {Component, Watch} from 'vue-property-decorator';
-  import recordListModel from '@/models/recordListModel';
-  import tagListModel from '@/models/tagListModel';
   import FormItem from '@/components/Money/FormItem.vue';
+  import Tags from '@/components/Money/Tags.vue';
+  import {Component} from 'vue-property-decorator';
 
   // const recordListModel = require('@/recordListModel.js').default;
 
   // window.localStorage.setItem('version', '0.0.1');
   // const version = window.localStorage.getItem('version') || '0';
   // const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
-  const recordList = recordListModel.fetch();
 
   // if (version === '0.0.1') {
   //   // 数据库升级，数据迁移
@@ -49,7 +46,7 @@
   })
   export default class Money extends Vue {
     tags = window.tagList;
-    recordList= recordList;
+    recordList = window.recordList;
     record = {
       tags: [], note: '', type: '-', amount: 0
     };
@@ -68,13 +65,7 @@
       this.record.note = value;
     }
     saveRecord() {
-      recordListModel.create(this.record);
-    }
-    //这里push的record地址，所以如果进行修改，之前的数据也会跟着改变，因为push进去的地址读取到的是新amount,现在这样会复制一份record
-
-    @Watch('recordList')
-    onRecordListChange() {
-      recordListModel.save();
+      window.createRecord(this.record);
     }
   }
 </script>

@@ -22,7 +22,6 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
-  import tagListModel from '@/models/tagListModel';
   import FormItem from '@/components/Money/FormItem.vue';
   import Button from '@/components/Button.vue';
 
@@ -30,29 +29,22 @@
     components: {FormItem, Button}
   })
   export default class EditLabel extends Vue {
-    tag?: { id: string, name: string } = undefined;
+    tag = window.findTag(this.$route.params.id);
+    // route 用来获取路由信息
     created() {
-      const id = this.$route.params.id;
-      // route 用来获取路由信息
-      tagListModel.fetch();
-      const tags = tagListModel.data;
-      const tag = tags.filter(t => t.id === id)[0];
-      // filter 筛选
-      if (tag) {
-        this.tag = tag;
-      } else {
+      if (!this.tag) {
         this.$router.replace('/404');
         // router 用来路由器转发
       }
     }
     update(name: string) {
       if (this.tag) {
-        tagListModel.update(this.tag.id, name);
+        window.updateTag(this.tag.id, name);
       }
     }
     remove() {
       if (this.tag) {
-        if (tagListModel.remove(this.tag.id)) {
+        if (window.removeTag(this.tag.id)) {
           this.$router.back();
         }
       }
@@ -64,7 +56,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~@/assets/style/helper.scss";
   .navBar {
     height: 64px;
     text-align: center;
@@ -85,6 +76,7 @@
     }
   }
   .form-wrapper {
+    color: #f6c84c;
     margin-top: 8px;
   }
   .deleteTag {
