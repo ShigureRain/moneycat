@@ -1,7 +1,7 @@
 <template>
   <Layout class-prefix="layout">
     <Types :value.sync="record.type"/>
-    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+    <Tags/>
     <FormItem field-name="备注"
               placeholder="这里输入备注"
               @update:value="onUpdateNotes"/>
@@ -16,49 +16,24 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component} from 'vue-property-decorator';
-  import store from '@/store/index2';
-
-  // const recordListModel = require('@/recordListModel.js').default;
-
-  // window.localStorage.setItem('version', '0.0.1');
-  // const version = window.localStorage.getItem('version') || '0';
-  // const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
-
-  // if (version === '0.0.1') {
-  //   // 数据库升级，数据迁移
-  //   recordList.forEach(record => {
-  //     record.createdAt = new Date(2020, 0, 1);
-  //   });
-  //   window.localStorage.setItem('recordList', JSON.stringify(recordList));
-  //   // 保存数据
-  // }
-  // window.localStorage.setItem('version', '0.0.2');
-
-  // type RecordItem = {
-  //   tags: string[]
-  //   note: string
-  //   type: string
-  //   amount: number  // 数据类型 object | string
-  //   createdAt?: Date   // 类 / 构造函数
-  // }
 
   @Component({
-    components: {Types, NumberPad, Tags, FormItem}
+    components: {Types, NumberPad, Tags, FormItem},
+    computed: {
+      recordList() {
+        return this.$store.state.recordList;
+      }
+    }
   })
+
   export default class Money extends Vue {
-    tags = store.tagList;
-    recordList = store.recordList;
     record = {
       tags: [], note: '', type: '-', amount: 0
     };
-
-    onUpdateTags(value: []) {
-      this.record.tags = value;
+    created(){
+      this.$store.commit('fetchRecords')
     }
-    // @update:value="onUpdateType"
-    //   onUpdateType(value: string) {
-    //     this.record.type = value;
-    //   }
+
     onUpdateAmount(value: string) {
       this.record.amount = parseFloat(value);
     }
@@ -66,7 +41,7 @@
       this.record.note = value;
     }
     saveRecord() {
-      store.createRecord(this.record);
+      this.$store.commit('createRecord', this.record);
     }
   }
 </script>
