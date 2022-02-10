@@ -29,12 +29,13 @@
     components: {FormItem, Button},
   })
   export default class EditLabel extends Vue {
-    get tag(){
+    get tag() {
       return this.$store.state.currentTag;
     }
     // route 用来获取路由信息
     created() {
       const id = this.$route.params.id;
+      this.$store.commit('fetchTags')
       this.$store.commit('setCurrentTag', id);
       if (!this.tag) {
         this.$router.replace('/404');
@@ -43,20 +44,21 @@
     }
     update(name: string) {
       if (this.tag) {
-        store.updateTag(this.tag.id, name);
+        this.$store.commit('updateTag', {
+          id: this.tag.id, name
+        });
       }
     }
     remove() {
       if (this.tag) {
-        if (store.removeTag(this.tag.id)) {
-          this.$router.back();
-        }
+        this.$store.commit('removeTag', this.tag.id);
       }
     }
     goBack() {
       this.$router.back();
     }
   }
+
 </script>
 
 <style lang="scss" scoped>
