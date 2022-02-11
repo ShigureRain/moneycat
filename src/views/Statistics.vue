@@ -31,16 +31,33 @@
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
   ::v-deep .type-tabs-item {
+    width: 30%;
   }
   ::v-deep .interval-tabs-item {
-    background: #f5f5f5;
-    padding: 0 15% 0 15%;
+    background: white;
+    position: absolute;
+    width: 100%;
+    height: 100%;
     &.selected {
-      color: $color-highlight;
+      background: $color-highlight;
       &:after {
         display: none;
       }
     }
+  }
+  ::v-deep .interval-tabs {
+    width: 80%;
+    border: 1px solid $color-highlight;
+    background: #f5f5f5;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    margin: 20px 0 20px 0;
+    height: 40px;
+    align-items: center;
+    justify-content: space-around;
+    overflow: hidden;
   }
 
 </style>
