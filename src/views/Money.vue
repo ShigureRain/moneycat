@@ -12,7 +12,6 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import Types from '@/components/Money/Types.vue';
   import NumberPad from '@/components/Money/NumberPad.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
@@ -21,7 +20,7 @@
   import recordTypeList from '@/constants/recordTypeList';
 
   @Component({
-    components: {Tabs, Types, NumberPad, Tags, FormItem},
+    components: {Tabs, NumberPad, Tags, FormItem},
   })
 
   export default class Money extends Vue {
