@@ -40,8 +40,9 @@
     justify-content: center;
     font-size: 24px;
     color: #333;
-    height: 64px;
     > li {
+      width: 30%;
+      height: 64px;
       display: flex;
       justify-content: center;
       align-items: center;
