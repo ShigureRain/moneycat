@@ -65,7 +65,7 @@
     justify-content: center;
     font-size: 24px;
     > li {
-      width: 30%;
+      width: 34%;
       height: 64px;
       display: flex;
       justify-content: center;

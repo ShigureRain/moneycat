@@ -39,9 +39,10 @@
     display: flex;
     justify-content: center;
     font-size: 24px;
-    height: 64px;
     color: #333;
     > li {
+      width: 34%;
+      height: 64px;
       display: flex;
       justify-content: center;
       align-items: center;
