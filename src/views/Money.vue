@@ -2,7 +2,7 @@
   <Layout class-prefix="layout">
     <Tabs :data-source="recordTypeList"
           :value.sync="record.type"/>
-    <Tags/>
+    <Tags  @update:value="record.tags = $event"/>
     <FormItem field-name="备注"
               placeholder="这里输入备注"
               @update:value="onUpdateNotes"/>
@@ -38,6 +38,7 @@
     onUpdateAmount(value: string) {
       this.record.amount = parseFloat(value);
     }
+
     onUpdateNotes(value: string) {
       this.record.note = value;
     }
