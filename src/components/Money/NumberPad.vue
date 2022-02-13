@@ -78,7 +78,7 @@
       background-color: $color-highlight;
     }
     .output {
-      padding: 5px 20px;
+      padding: 4px 20px;
       font-size: 36px;
       font-family: Consolas, monospace;
     }
@@ -86,11 +86,11 @@
   .buttons {
     > button {
       width: 25%;
-      height: 64px;
+      height: 52px;
       float: left;
       border: none;
       &.ok {
-        height: 64*2px;
+        height: 52*2px;
         float: right;
       }
       &.zero {

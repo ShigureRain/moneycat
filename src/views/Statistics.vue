@@ -1,20 +1,25 @@
 <template>
   <Layout>
     <Tabs :data-source="recordTypeList" :value.sync="type" class-prefix="type"/>
-    <ol>
-      <li v-for="(group,index) in groupedList" :key="index">
-        <h4 class="title">{{ beautify(group.title) }}<span>￥{{ group.total }}</span></h4>
-        <ol>
-          <li v-for="item in group.items" :key="item.id"
-              class="record"
-          >
-            <span>{{ item.tags }}</span>
-            <span class="notes">{{ item.note }}</span>
-            <span>￥{{ item.amount }} </span>
-          </li>
-        </ol>
-      </li>
-    </ol>
+    <div class="wrap">
+      <ol v-if="groupedList.length>0">
+        <li v-for="(group,index) in groupedList" :key="index">
+          <h4 class="title">{{ beautify(group.title) }}<span>￥{{ group.total }}</span></h4>
+          <ol>
+            <li v-for="item in group.items" :key="item.id"
+                class="record"
+            >
+              <span>{{ tagString(item.tags) }}</span>
+              <span class="notes">{{ item.note }}</span>
+              <span>￥{{ item.amount }} </span>
+            </li>
+          </ol>
+        </li>
+      </ol>
+      <div v-else class="noResult">
+        当前没有记录喵~
+      </div>
+    </div>
   </Layout>
 </template>
 
@@ -38,11 +43,10 @@
     }
     get groupedList() {
       const {recordList} = this;
-      if (recordList.length === 0) {return [];}
-
       const newList = clone(recordList).filter(r => r.type === this.type).sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+      if (newList.length === 0) {return [];}
       type Result = { title: string, total?: number, items: RecordItem[] }[]
-      const result: Result = [{title: dayjs(recordList[0].createdAt).format('YYYY-MM-DD'), items: [recordList[0]]}];
+      const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
       for (let i = 1; i < newList.length; i++) {
         const current = newList[i];
         const last = result[result.length - 1];
@@ -74,7 +78,7 @@
     }
 
     tagString(tags: Tag[]) {
-      return tags.length === 0 ? '无' : tags.join(',');
+      return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
     }
     beforeCreate() {
       this.$store.commit('fetchRecords');
@@ -84,6 +88,10 @@
 </script>
 
 <style lang="scss" scoped>
+  .noResult {
+    padding: 16px;
+    text-align: center;
+  }
   %item {
     padding: 8px 16px;
     line-height: 24px;
@@ -103,5 +111,4 @@
     margin-left: 16px;
     color: #999;
   }
-
 </style>

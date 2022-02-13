@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div class="title">喵 记 簿</div>
+    <div class="title">招 财 喵</div>
     <div class="tags">
       <router-link v-for="tag in tags" :key="tag.id" :to="`/labels/edit/${tag.id}`" class="tag">
         <span>{{ tag.name }}</span>
@@ -28,7 +28,7 @@
     components: {Button},
   })
   export default class Labels extends mixins(TagHelper) {
-    get tags(){
+    get tags() {
       return this.$store.state.tagList;
     }
     beforeCreate() {

@@ -40,7 +40,7 @@
     }
     input {
       margin-left: 16px;
-      height: 64px;
+      height: 50px;
       flex-grow: 1;
       background: transparent;
       border: none;
