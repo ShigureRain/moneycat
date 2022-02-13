@@ -1,10 +1,9 @@
 <template>
   <Layout>
     <Tabs :data-source="recordTypeList" :value.sync="type" class-prefix="type"/>
-    <Tabs :data-source="intervalLIst" :value.sync="interval" class-prefix="interval"/>
     <ol>
-      <li v-for="group in result" :key="group.title">
-        <h4 class="title">{{ beautify(group.title) }}</h4>
+      <li v-for="(group,index) in groupedList" :key="index">
+        <h4 class="title">{{ beautify(group.title) }}<span>￥{{ group.total }}</span></h4>
         <ol>
           <li v-for="item in group.items" :key="item.id"
               class="record"
@@ -23,33 +22,40 @@
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
   import Tabs from '@/components/Tabs.vue';
-  import intervalList from '@/constants/intervalList';
   import recordTypeList from '@/constants/recordTypeList';
   import dayjs from 'dayjs';
+  import clone from '@/lib/clone';
 
   @Component({
     components: {Tabs},
   })
   export default class Statistics extends Vue {
     type = '-';
-    interval = 'day';
-    intervalLIst = intervalList;
     recordTypeList = recordTypeList;
 
     get recordList() {
       return (this.$store.state as RootState).recordList;
     }
-    get result() {
+    get groupedList() {
       const {recordList} = this;
-      type HashTableItem = { title: string, items: recordList[] }
+      if (recordList.length === 0) {return [];}
 
-      const hashTable: { [key: string]: HashTableItem } = {};  //声明空对象的类型
-      for (let i = 0; i < this.recordList.length; i++) {
-        const [date, time] = recordList[i].createdAt!.split('T');  //按 T 分割
-        hashTable[date] = hashTable[date] || {title: date, items: []};
-        hashTable[date].items.push(recordList[i]);
+      const newList = clone(recordList).filter(r => r.type === this.type).sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+      type Result = { title: string, total?: number, items: RecordItem[] }[]
+      const result: Result = [{title: dayjs(recordList[0].createdAt).format('YYYY-MM-DD'), items: [recordList[0]]}];
+      for (let i = 1; i < newList.length; i++) {
+        const current = newList[i];
+        const last = result[result.length - 1];
+        if (dayjs(last.title).isSame(dayjs(current.createdAt), 'day')) {
+          last.items.push(current);
+        } else {
+          result.push({title: dayjs(current.createdAt).format('YYYY-MM-DD'), items: [current]});
+        }
       }
-      return hashTable;
+      result.map(group => {
+        group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+      });
+      return result;
     }
     beautify(string: string) {
       const day = dayjs(string);
@@ -78,35 +84,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~@/assets/style/helper.scss";
-  ::v-deep {
-    .interval-tabs-item {
-      background: white;
-      position: absolute;
-      width: 100% !important;
-      height: 100%;
-      &.selected {
-        background: $color-highlight;
-        &:after {
-          display: none;
-        }
-      }
-    }
-    .interval-tabs {
-      width: 80%;
-      border: 1px solid $color-highlight;
-      background: #f5f5f5;
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 20px;
-      margin: 20px 0 20px 0;
-      height: 40px;
-      align-items: center;
-      justify-content: space-around;
-      overflow: hidden;
-    }
-  }
   %item {
     padding: 8px 16px;
     line-height: 24px;
