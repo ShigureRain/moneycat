@@ -4,8 +4,8 @@
       <Icon name="labels"/>
       标签
     </router-link>
-    <router-link active-class="selected" class="item money" to="/money">
-      <Icon name="money"/>
+    <router-link active-class="selected" class="item cat" to="/money">
+      <Icon name="cat"/>
     </router-link>
     <router-link active-class="selected" class="item" to="/statistics">
       <Icon name="statistics"/>
@@ -41,8 +41,9 @@
         height: 32px;
       }
     }
-    > .item.money {
+    > .item.cat {
       .icon {
+        padding: 10px 0 10px 0;
         width: 64px;
         height: 64px;
       }

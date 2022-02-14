@@ -78,8 +78,9 @@
       background-color: $color-highlight;
     }
     .output {
-      padding: 4px 20px;
+      padding-right: 20px;
       font-size: 36px;
+      line-height: 52px;
       font-family: Consolas, monospace;
     }
   }
